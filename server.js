@@ -33,16 +33,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Arquivos estáticos (CSS, JS, imagens) – ajuste a pasta se necessário
+// Arquivos estáticos (CSS, JS, imagens)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// EJS para páginas dinâmicas (carrinho e “ver agora”)
+// EJS (carrinho e “ver agora”)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 /** 3) ROTAS DE PÁGINA **/
 
-// Página inicial: seu index.html atual (estático)
+// Página inicial: index.html atual
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -70,13 +70,11 @@ app.get('/produto/msi', async (req, res) => {
   res.render('produto-msi', { prod });
 });
 
-/** 4) API: PRODUTOS **/
 app.get('/api/produtos', async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM produtos ORDER BY id ASC');
   res.json(rows);
 });
 
-/** 5) API: CARRINHO **/
 
 // Adicionar item
 app.post('/api/carrinho/adicionar', async (req, res) => {
@@ -84,7 +82,7 @@ app.post('/api/carrinho/adicionar', async (req, res) => {
   const { produtoId, quantidade } = req.body;
   const qnt = Number(quantidade || 1);
 
-  // se já existir o mesmo produto no carrinho, só soma a quantidade
+  // se já existir o mesmo produto no carrinho, só soma tlgd
   const check = await pool.query(
     'SELECT id, quantidade FROM carrinho WHERE session_id = $1 AND produto_id = $2',
     [sid, produtoId]
