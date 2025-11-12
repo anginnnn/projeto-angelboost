@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/all.css">
+</head>
+<body class="login-page">
+    <form action="/login" method="post" class="auth-form">
+        <h2>Login</h2>
+        <label class="auth-label">
+            <input type="text" placeholder="Digite seu email" name="email" value="<%= values.email || '' %>">
+        </label>
+        <label class="auth-label">
+            <input id="password-input" type="password" placeholder="Digite sua senha" name="senha" value="<%= values.senha || '' %>">
+            <label class="show-pass-label">
+                <input type="checkbox" class="show-pass" hidden>
+                mostrar senha
+            </label>
+        </label>
+        <p class="error-message"><%= error %></p>
+        <button type="submit" class="btn-basico">Entrar</button>
+        <span style="text-align: center;">Ainda não tem uma conta? 
+            <a style="color: #00386d;" href="/register">Registre-se aqui!</a>
+        </span>
+    </form>
+    <script>
+        const showPass = document.querySelector(".show-pass")
+        const showPassLabel = document.querySelector(".show-pass-label")
+        const passwordInput = document.querySelector("#password-input")
+
+        showPass.addEventListener("click", () => {
+            if(showPass.checked){
+                passwordInput.setAttribute("type", "text")
+                showPassLabel.querySelector("span").innerText = "ocultar senha"
+            } else {
+                showPassLabel.querySelector("span").innerText = "mostrar senha"
+                passwordInput.setAttribute("type", "password")
+            }
+        })
+    </script>
+</body>
+</html>

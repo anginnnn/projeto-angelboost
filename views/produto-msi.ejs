@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= prod.nome %> - AngelBoost</title>
+  <link rel="stylesheet" href="/all.css" />
+</head>
+<body>
+  <div class="navegbar">
+    <div class="header-inner-content">
+      <h1 class="logo">Angel<span>Boost</span></h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>Produtos</li>
+          <li>Sobre</li>
+          <li>Contatos</li>
+          <li><a href="/pedidos">Histórico</a></li>
+        </ul>
+      </nav>
+      <div class="nav-icon-container">
+        <a href="/carrinho"><img src="/images/cart.png" alt="Cart"></a>
+      </div>
+    </div>
+  </div>
+
+  <section class="produtos" style="max-width:1000px; margin:2rem auto; background:#fff;">
+    <div style="display:flex; gap:2rem; align-items:center;">
+      <img src="<%= prod.img_url %>" alt="<%= prod.nome %>" style="width:45%; object-fit:contain;">
+      <div>
+        <h2><%= prod.nome %></h2>
+        <p style="margin:.5rem 0 1rem;"><%= prod.descricao %></p>
+        <h3>R$ <%= Number(prod.preco).toFixed(2) %></h3>
+        <form onsubmit="return enviar(event)">
+          <input type="hidden" name="produtoId" value="<%= prod.id %>">
+          <button class="btn-basico" type="submit">Adicionar ao Carrinho</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  async function enviar(e){
+    e.preventDefault(); // impede de recarregar a página
+    const form = e.target; // pega o formulário que foi enviado
+    const id = Number(form.produtoId.value); // pega o id do input escondido
+    await fetch('/api/carrinho/adicionar', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ produtoId: id, quantidade: 1 })
+    });
+    alert('Adicionado ao carrinho!');
+    return false;
+  }
+</script>
+</body>
+</html>

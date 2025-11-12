@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Histórico de Compras - AngelBoost</title>
+  <link rel="stylesheet" href="/all.css" />
+</head>
+<body>
+  <div class="navegbar">
+    <div class="header-inner-content">
+      <h1 class="logo">Angel<span>Boost</span></h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>Produtos</li>
+          <li>Sobre</li>
+          <li>Contatos</li>
+          <li><a href="/pedidos">Histórico</a></li>
+        </ul>
+      </nav>
+      <div class="nav-icon-container">
+        <a href="/carrinho"><img src="/images/cart.png" alt="Cart"></a>
+      </div>
+    </div>
+  </div>
+
+  <section class="produtos" style="background:#fff; max-width:1300px; margin: 2rem auto">
+    <h2 style="margin-bottom:1rem">Seu Histórico de Compras</h2>
+
+    <% if (itens.length === 0) { %>
+      <p>Você ainda não fez nenhuma compra</p>
+    <% } else { %>
+      <table style="width:100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:.5rem; border-bottom:1px solid #ddd;">Produto</th>
+            <th style="text-align:left; padding:.5rem; border-bottom:1px solid #ddd;">Preço individual</th>
+            <th style="text-align:left; padding:.5rem; border-bottom:1px solid #ddd;">Qtd</th>
+            <th style="text-align:left; padding:.5rem; border-bottom:1px solid #ddd;">Total da compra</th>
+            <th style="text-align:left; padding:.5rem; border-bottom:1px solid #ddd;">Compra efetuada</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% itens.forEach(item => { %>
+          <tr>
+            <td style="padding:.5rem;">
+              <img src="<%= item.img_url %>" alt="" style="width:60px; vertical-align:middle; margin-right:10px;">
+              <%= item.nome %>
+            </td>
+            <td style="padding:.5rem;">R$ <%= Number(item.preco_na_compra).toFixed(2) %></td>
+            <td style="padding:.5rem;"><%= item.quantidade %></td>
+            <td style="padding:.5rem;">R$ <%= Number(item.total).toFixed(2) %></td>
+            <td style="padding:.5rem;">
+                <%= new Date(item.comprado_em).toLocaleString('pt-BR') %>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </section>
+</body>
+</html>
